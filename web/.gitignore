@@ -4,5 +4,6 @@ node_modules/
 out/
 data/
 public/browse-data/
+public/word-data/
 .env.local
 .env*.local

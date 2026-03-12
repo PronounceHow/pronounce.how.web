@@ -30,4 +30,13 @@ if (!fs.existsSync(sourceDataDir)) {
 console.log('Copying data...');
 fs.cpSync(sourceDataDir, destDataDir, { recursive: true });
 
+// Also copy word JSONs to public/word-data/ for client-side fetching (compare feature)
+const publicWordDataDir = path.resolve(__dirname, '..', 'public', 'word-data');
+const sourceWordsDir = path.join(sourceDataDir, 'words');
+if (fs.existsSync(sourceWordsDir)) {
+  console.log('Copying word JSONs to public/word-data/ for client fetch...');
+  fs.cpSync(sourceWordsDir, publicWordDataDir, { recursive: true });
+  console.log('✓ Public word data copied successfully');
+}
+
 console.log('✓ Data copied successfully');

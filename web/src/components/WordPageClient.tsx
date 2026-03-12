@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import type { WordData } from "@/lib/types";
 import { AdUnit } from "./AdUnit";
 import { SearchBar } from "./SearchBar";
@@ -12,12 +12,25 @@ const LETTERS = "abcdefghijklmnopqrstuvwxyz".split("");
 
 interface WordPageClientProps {
   data: WordData;
-  compareData?: WordData | null;
 }
 
-export function WordPageClient({ data, compareData }: WordPageClientProps) {
+export function WordPageClient({ data }: WordPageClientProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const compareSlug = searchParams.get("compare");
+  const [compareData, setCompareData] = useState<WordData | null>(null);
   const [showCompareSearch, setShowCompareSearch] = useState(false);
+
+  useEffect(() => {
+    if (!compareSlug) {
+      setCompareData(null);
+      return;
+    }
+    fetch(`/word-data/${compareSlug[0]}/${compareSlug}.json`)
+      .then((r) => r.ok ? r.json() : null)
+      .then((d) => setCompareData(d))
+      .catch(() => setCompareData(null));
+  }, [compareSlug]);
 
   const handleCompareSearch = (word: string) => {
     router.push(`/${data.slug}?compare=${word}`);

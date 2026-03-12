@@ -7,7 +7,6 @@ import { WordJsonLd } from "@/components/WordJsonLd";
 
 interface PageProps {
   params: { slug: string };
-  searchParams: { compare?: string };
 }
 
 // Reserved paths that have their own routes — exclude from dynamic [slug]
@@ -55,17 +54,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default function WordPage({ params, searchParams }: PageProps) {
+export default function WordPage({ params }: PageProps) {
   const data = getWordData(params.slug);
   if (!data) notFound();
-
-  const compareSlug = searchParams.compare;
-  const compareData = compareSlug ? getWordData(compareSlug) : null;
 
   return (
     <>
       <WordJsonLd data={data} />
-      <WordPageClient data={data} compareData={compareData} />
+      <WordPageClient data={data} />
     </>
   );
 }
