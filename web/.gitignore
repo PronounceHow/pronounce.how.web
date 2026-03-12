@@ -3,6 +3,7 @@ node_modules/
 .vercel/
 out/
 data/
+public/audio
 public/browse-data/
 public/word-data/
 .env.local
