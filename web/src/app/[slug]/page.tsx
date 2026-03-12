@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { getWordData, getWordSlugs } from "@/lib/data";
 import { REGION_FLAGS, REGION_NAMES } from "@/lib/types";
@@ -61,7 +62,9 @@ export default function WordPage({ params }: PageProps) {
   return (
     <>
       <WordJsonLd data={data} />
-      <WordPageClient data={data} />
+      <Suspense fallback={null}>
+        <WordPageClient data={data} />
+      </Suspense>
     </>
   );
 }
