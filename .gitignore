@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+.DS_Store
+node_modules/
+.next/
+*.mp3
+*.mp4
+pipeline/sources/
+pipeline/staging.db
+pipeline/audio_cache/
+pipeline/youtube_token.json
+pipeline/youtube_uploads.json
+client_secrets.json
+audio/
+video/

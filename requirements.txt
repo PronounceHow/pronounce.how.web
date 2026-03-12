@@ -1,0 +1,12 @@
+eng-to-ipa
+gruut-ipa
+jsonschema[format]
+phonemizer
+g2p-en
+pysle
+Pillow
+pyphen
+requests
+tqdm
+google-cloud-texttospeech
+azure-cognitiveservices-speech
