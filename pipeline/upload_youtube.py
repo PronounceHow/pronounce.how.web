@@ -42,8 +42,8 @@ YOUTUBE_API_VERSION = "v3"
 
 # YouTube API quota costs
 QUOTA_PER_UPLOAD = 1600  # videos.insert = 1600 units
-QUOTA_DAILY_LIMIT = 10_000
-MAX_UPLOADS_PER_DAY = QUOTA_DAILY_LIMIT // QUOTA_PER_UPLOAD  # 6
+QUOTA_DAILY_LIMIT = 500_000
+MAX_UPLOADS_PER_DAY = QUOTA_DAILY_LIMIT // QUOTA_PER_UPLOAD  # 312
 
 # Rate limiting: minimum seconds between uploads to stay well within quota
 MIN_UPLOAD_INTERVAL_SECONDS = 30
@@ -567,9 +567,13 @@ def discover_videos(
                 "word_data": word_data,
             })
     else:
-        # Discover all videos in the directory
-        video_files = sorted(video_dir.glob("*.mp4"))
-        for video_path in video_files:
+        # Discover all videos, grouped by first letter, then interleave
+        # so uploads are distributed evenly across the alphabet each day.
+        from itertools import zip_longest
+        from collections import defaultdict
+
+        by_letter: dict[str, list] = defaultdict(list)
+        for video_path in sorted(video_dir.glob("*.mp4")):
             slug = video_path.stem
             json_path = data_dir / slug[0] / f"{slug}.json"
 
@@ -583,11 +587,18 @@ def discover_videos(
                 logger.warning("Failed to read %s: %s", json_path, exc)
                 continue
 
-            candidates.append({
+            by_letter[slug[0]].append({
                 "slug": slug,
                 "video_path": video_path,
                 "word_data": word_data,
             })
+
+        # Round-robin across letters: a[0], b[0], c[0], ..., a[1], b[1], ...
+        letter_lists = [by_letter[k] for k in sorted(by_letter)]
+        for row in zip_longest(*letter_lists):
+            for item in row:
+                if item is not None:
+                    candidates.append(item)
 
     return candidates
 

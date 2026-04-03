@@ -21,10 +21,10 @@ export const metadata: Metadata = {
     siteName: "pronounce.how",
   },
   verification: {
-    google: "ca-pub-9489600885555892",
+    google: "ca-pub-1749026204258736",
   },
   other: {
-    "google-adsense-account": "ca-pub-9489600885555892",
+    "google-adsense-account": "ca-pub-1749026204258736",
   },
 };
 
@@ -49,7 +49,7 @@ export default function RootLayout({
         {/* AdSense: defer until page is idle */}
         <Script
           async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9489600885555892"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1749026204258736"
           crossOrigin="anonymous"
           strategy="lazyOnload"
         />
