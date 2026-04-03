@@ -28,7 +28,7 @@ export function AdUnit({ slot, format = "auto", className = "" }: AdUnitProps) {
       <ins
         className="adsbygoogle"
         style={{ display: "block" }}
-        data-ad-client="ca-pub-9489600885555892"
+        data-ad-client="ca-pub-1749026204258736"
         data-ad-format={format}
         data-full-width-responsive="true"
         {...(slot ? { "data-ad-slot": slot } : {})}
