@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
-  "buildCommand": "npm run vercel-build",
+  "buildCommand": "git clone --depth=1 https://github.com/PronounceHow/pronounce.how.data.git ../../pronounce-how-data && npm run vercel-build",
   "cleanUrls": true,
   "trailingSlash": false,
   "headers": [
