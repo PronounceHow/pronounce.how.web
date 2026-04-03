@@ -15,3 +15,4 @@ pipeline/youtube_uploads.json
 client_secrets.json
 audio/
 video/
+*.log
